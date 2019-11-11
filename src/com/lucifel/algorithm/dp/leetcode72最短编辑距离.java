@@ -28,4 +28,45 @@ package com.lucifel.algorithm.dp;
 //        else ed[i][j] = min(min(ed[i][j - 1] + 1, ed[i - 1][j] + 1), ed[i - 1][j - 1] + 1);    // 将3种方法都尝试，取最小的结果
 //        现在有了转移关系，我们只要先计算子问题的结果（较短子串之间的编辑距离）并存储起来，然后用它计算出父问题的结果（较长子串之间的编辑距离），最后就能算出两个完整字符串之间的编辑距离。
 public class leetcode72最短编辑距离 {
+    public static int getMinEditDistance(String A,String B){
+        int dp[][] = new int[A.length()][B.length()];
+
+        if(A.equals(B)){
+            return 0;
+        }
+        if(A.equals("")){
+            return B.length();
+        }
+        if(B.equals("")){
+            return A.length();
+        }
+
+        //B为空的情况
+        for (int i = 0; i < A.length(); i++) {
+            dp[i][0]=i;
+        }
+
+        //A为空的情况
+        for (int j = 0; j < B.length(); j++) {
+            dp[0][j]=j;
+        }
+
+        for (int i = 1; i < A.length(); i++) {
+            for (int j = 1; j < B.length(); j++) {
+                if (A.charAt(i)==B.charAt(j)) {
+                    dp[i][j] = dp[i - 1][j - 1];
+                } else {
+                    int temp1=dp[i-1][j]+1;
+                    int temp2=dp[i][j-1]+1;
+                    int temp3=dp[i-1][j-1]+1;//替换
+                    dp[i][j]=Math.min(temp1,Math.min(temp2,temp3));
+                }
+            }
+        }
+        return dp[A.length()-1][B.length()-1];
+    }
+
+    public static void main(String[] args) {
+        System.out.println(getMinEditDistance("hello","hellw123"));
+    }
 }
