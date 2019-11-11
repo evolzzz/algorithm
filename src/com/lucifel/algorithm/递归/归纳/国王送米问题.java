@@ -5,7 +5,7 @@ class Result{
     public long wheatTotalNum=0;
 }
 
-public class proveWheatNumProblem {
+public class 国王送米问题 {
 
     public static boolean prove(int k, Result result){
         //证明n=1时成立
